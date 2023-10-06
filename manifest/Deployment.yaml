@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-hello
+  name: app-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-hello
+  template:
+    metadata:
+      labels:
+        app: app-hello
+    spec:
+      containers:
+      - image: ghcr.io/wiktorvip/app-hello:1.0
+        name: app-hello
