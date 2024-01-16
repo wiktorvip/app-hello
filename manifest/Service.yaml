@@ -3,12 +3,12 @@ kind: Service
 metadata:
   labels:
     app: app-hello
-  name: np-app-hello
+  name: np-svc-app-hello
 spec:
   ports:
-  - port: 9002
+  - port: 9070
     protocol: TCP
-    targetPort: 9002
+    targetPort: 9070
     nodePort: 30008
   selector:
     app: app-hello
