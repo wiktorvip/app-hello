@@ -6,3 +6,5 @@
 **docker-compose*
 **.env
 manifest
+.github
+.dockerignore
