@@ -1,4 +1,4 @@
 ## hello-app
 
 * name: app-hello
-* port: 9000
+* port: 9002

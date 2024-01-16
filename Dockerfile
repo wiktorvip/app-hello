@@ -8,6 +8,6 @@ FROM gcr.io/distroless/base-debian11
 WORKDIR /
 COPY --from=builder /hello-app /hello-app
 COPY APP_VERSION /APP_VERSION
-ENV PORT 8000
+ENV PORT 9002
 USER nonroot:nonroot
 CMD ["/hello-app"]

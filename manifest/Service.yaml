@@ -6,9 +6,9 @@ metadata:
   name: np-app-hello
 spec:
   ports:
-  - port: 8000
+  - port: 9002
     protocol: TCP
-    targetPort: 8000
+    targetPort: 9002
     nodePort: 30008
   selector:
     app: app-hello
