@@ -5,6 +5,6 @@
 **Dockerfile*
 **docker-compose*
 **.env
-manifest
+manifests
 .github
 .dockerignore

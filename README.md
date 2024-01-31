@@ -5,6 +5,6 @@
 
 ### Deploy:
 ```
-kubectl apply -f https://raw.githubusercontent.com/wiktorvip/app-hello/main/manifest/Deployment.yaml
-kubectl apply -f https://raw.githubusercontent.com/wiktorvip/app-hello/main/manifest/Service.yaml
+kubectl apply -f https://raw.githubusercontent.com/wiktorvip/app-hello/main/manifests/Deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/wiktorvip/app-hello/main/manifests/Service.yaml
 ```

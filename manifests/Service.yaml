@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: app-hello
-  name: np-svc-app-hello
+  name: svc-app-hello
 spec:
   ports:
   - port: 9070
