@@ -13,4 +13,3 @@ spec:
   selector:
     app: app-hello
   type: NodePort
-

@@ -15,7 +15,7 @@ spec:
         app: app-hello
     spec:
       containers:
-      - image: ghcr.io/wiktorvip/app-hello:1.0
+      - image: ghcr.io/wiktorvip/app-hello:v1
         name: app-hello
         ports:
           - containerPort: 9070
