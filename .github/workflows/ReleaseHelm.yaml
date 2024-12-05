@@ -42,7 +42,7 @@ jobs:
         VERSION: ${{ github.ref_name }}
       run: |
         helm package chart --version ${{ env.APP_VERSION }} --app-version ${{ env.APP_VERSION }} --dependency-update
-        helm push ${{ env.APP_NAME }}-${{ env.APP_VERSION }}.tgz oci://${CHARTS_REPO}
+        helm push ${{ env.APP_NAME }}-${{ env.APP_VERSION }}.tgz oci://${CHARTS_REPO}/charts
 
 #        CHART_VERSION=$(echo $VERSION | cut -c 2-)
 #        cd charts/guestbook
