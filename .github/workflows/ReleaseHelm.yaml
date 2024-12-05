@@ -1,4 +1,4 @@
-name: Release
+name: Release helm chart
 
 on:
     workflow_dispatch:
@@ -15,7 +15,15 @@ jobs:
       uses: azure/setup-helm@v4.2.0
       with:
         version: '3.13.3'
-    
+
+    - name: "Set varable APP_VERSION from file APP_VERSION if exist"
+      if: ${{ hashFiles('APP_VERSION') != '' }}
+      run: APP_VER=$(cat APP_VERSION); echo "APP_VERSION=$APP_VER" >> ${GITHUB_ENV}
+  
+    - name: "Set varable APP_VERSION to default if file not exist"
+      if: ${{ hashFiles('APP_VERSION') == '' }}
+      run: echo "APP_VERSION=0.0.1" >> ${GITHUB_ENV}        
+        
     - name: Login to GHCR
       uses: docker/login-action@v3
       with:
@@ -31,14 +39,14 @@ jobs:
         CHARTS_REPO: ghcr.io/wiktorvip/app-hello/
         VERSION: ${{ github.ref_name }}
       run: |
-        helm package chart --version ${{ env.VERSION }} --app-version ${{ env.VERSION }} --dependency-update
-        helm push ${{ env.APP_NAME }}-${{ env.VERSION }}.tgz oci://${CHARTS_REPO}
+        helm package chart --version ${{ env.APP_VERSION }} --app-version ${{ env.APP_VERSION }} --dependency-update
+        helm push ${{ env.APP_NAME }}-${{ env.APP_VERSION }}.tgz oci://${CHARTS_REPO}
 
-        CHART_VERSION=$(echo $VERSION | cut -c 2-)
-        cd charts/guestbook
-        helm dep up
-        helm package . --version ${CHART_VERSION} --app-version ${VERSION}
-        helm push guestbook-${CHART_VERSION}.tgz oci://${CHARTS_REPO}
+#        CHART_VERSION=$(echo $VERSION | cut -c 2-)
+#        cd charts/guestbook
+#        helm dep up
+#        helm package . --version ${CHART_VERSION} --app-version ${VERSION}
+#        helm push guestbook-${CHART_VERSION}.tgz oci://${CHARTS_REPO}
 
 #       run: |
 #         helm package chart --version ${{ env.VERSION }} --app-version ${{ env.VERSION }} --dependency-update
