@@ -1,0 +1,48 @@
+name: Release
+
+on:
+    workflow_dispatch:
+
+env:
+  APP_REPO:  ghcr.io/wiktorvip/app-hello
+  APP_NAME:  app-hello    
+
+jobs:
+  publish-charts:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Helm
+      uses: azure/setup-helm@v4.2.0
+      with:
+        version: '3.13.3'
+    
+    - name: Login to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ secrets.GH_USERNAME }}
+        password: ${{ secrets.GH_TOKEN }}
+   
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Publish chart
+      env:
+        CHARTS_REPO: ghcr.io/wiktorvip/app-hello/
+        VERSION: ${{ github.ref_name }}
+      run: |
+        helm package chart --version ${{ env.VERSION }} --app-version ${{ env.VERSION }} --dependency-update
+        helm push ${{ env.APP_NAME }}-${{ env.VERSION }}.tgz oci://${CHARTS_REPO}
+
+        CHART_VERSION=$(echo $VERSION | cut -c 2-)
+        cd charts/guestbook
+        helm dep up
+        helm package . --version ${CHART_VERSION} --app-version ${VERSION}
+        helm push guestbook-${CHART_VERSION}.tgz oci://${CHARTS_REPO}
+
+#       run: |
+#         helm package chart --version ${{ env.VERSION }} --app-version ${{ env.VERSION }} --dependency-update
+#         helm push ${{ env.APP_NAME }}-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
+
+# https://github.com/morey-tech/example-private-helm-oci/blob/main/.github/workflows/release.yaml
+# https://github.com/myspotontheweb/argocd-springboot-demo1/blob/main/.github/workflows/ci.yaml
